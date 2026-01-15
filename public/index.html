@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IT Tips & Tricks Tracker</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <h1>IT Tips & Tricks Tracker</h1>
+            <p>Common support issues and ChatGPT solutions</p>
+        </div>
+    </header>
+
+    <main class="main">
+        <div class="container">
+            <div class="controls">
+                <div class="search-container">
+                    <input type="text" id="searchInput" placeholder="Search tips...">
+                    <button id="searchBtn">Search</button>
+                </div>
+                <div class="filter-container">
+                    <select id="categoryFilter">
+                        <option value="">All Categories</option>
+                        <option value="Windows">Windows</option>
+                        <option value="Hardware">Hardware</option>
+                        <option value="Microsoft Office">Microsoft Office</option>
+                        <option value="Network">Network</option>
+                        <option value="Security">Security</option>
+                    </select>
+                </div>
+                <button id="addTipBtn" class="btn-primary">Add New Tip</button>
+            </div>
+
+            <div id="tipsContainer" class="tips-grid">
+                <!-- Tips will be loaded here dynamically -->
+            </div>
+
+            <div id="loading" class="loading">Loading tips...</div>
+            <div id="error" class="error" style="display: none;"></div>
+        </div>
+    </main>
+
+    <!-- Modal for viewing tip details -->
+    <div id="tipModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 id="modalTitle"></h2>
+            <div class="tip-meta">
+                <span class="category" id="modalCategory"></span>
+                <span class="date" id="modalDate"></span>
+            </div>
+            <div class="tip-section">
+                <h3>Problem:</h3>
+                <p id="modalProblem"></p>
+            </div>
+            <div class="tip-section">
+                <h3>ChatGPT Solution:</h3>
+                <p id="modalAnswer"></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for adding/editing tips -->
+    <div id="editModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 id="editModalTitle">Add New Tip</h2>
+            <form id="tipForm">
+                <div class="form-group">
+                    <label for="tipTitle">Title:</label>
+                    <input type="text" id="tipTitle" required>
+                </div>
+                <div class="form-group">
+                    <label for="tipCategory">Category:</label>
+                    <select id="tipCategory" required>
+                        <option value="">Select Category</option>
+                        <option value="Windows">Windows</option>
+                        <option value="Hardware">Hardware</option>
+                        <option value="Microsoft Office">Microsoft Office</option>
+                        <option value="Network">Network</option>
+                        <option value="Security">Security</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="tipProblem">Problem Description:</label>
+                    <textarea id="tipProblem" rows="4" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="tipAnswer">ChatGPT Answer:</label>
+                    <textarea id="tipAnswer" rows="6" required></textarea>
+                </div>
+                <div class="form-actions">
+                    <button type="button" id="cancelBtn" class="btn-secondary">Cancel</button>
+                    <button type="submit" class="btn-primary">Save Tip</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal for delete confirmation -->
+    <div id="deleteModal" class="modal" style="display: none;">
+        <div class="modal-content delete-modal">
+            <h2>Confirm Delete</h2>
+            <p>Are you sure you want to delete this tip? This action cannot be undone.</p>
+            <div class="modal-actions">
+                <button id="cancelDeleteBtn" class="btn-secondary">Cancel</button>
+                <button id="confirmDeleteBtn" class="btn-delete">Delete Tip</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/app.js"></script>
+</body>
+</html>

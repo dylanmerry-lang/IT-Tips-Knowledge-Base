@@ -1,0 +1,25 @@
+{
+  "name": "babysfirstvibe",
+  "version": "1.0.0",
+  "description": "IT Tips and Tricks Tracker - A web application for tracking common IT support issues and ChatGPT solutions",
+  "main": "server/app.js",
+  "scripts": {
+    "start": "node server/app.js",
+    "dev": "node server/app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "it-support",
+    "tips",
+    "tricks",
+    "chatgpt",
+    "tracker"
+  ],
+  "author": "Dylan Merry",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2",
+    "cors": "^2.8.5",
+    "body-parser": "^1.20.2"
+  }
+}

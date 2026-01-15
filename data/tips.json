@@ -1,0 +1,31 @@
+{
+  "tips": [
+    {
+      "id": 1,
+      "title": "Windows Update Stuck at 0%",
+      "category": "Windows",
+      "problem": "Windows update is stuck at 0% and won't progress",
+      "chatgpt_answer": "Try these steps: 1. Restart your computer and try updating again. 2. Run Windows Update Troubleshooter from Settings > Update & Security > Troubleshoot. 3. Temporarily disable antivirus software during the update. 4. Use the Windows Update Reset script if needed.",
+      "created_at": "2024-01-15T10:00:00Z",
+      "updated_at": "2024-01-15T10:00:00Z"
+    },
+    {
+      "id": 2,
+      "title": "Printer Not Responding",
+      "category": "Hardware",
+      "problem": "Network printer shows as offline or won't print",
+      "chatgpt_answer": "Common solutions: 1. Check printer power and connections. 2. Restart print spooler service (services.msc > Print Spooler > Restart). 3. Clear print queue. 4. Reinstall printer drivers. 5. Check network connectivity and firewall settings.",
+      "created_at": "2024-01-15T10:15:00Z",
+      "updated_at": "2024-01-15T10:15:00Z"
+    },
+    {
+      "id": 3,
+      "title": "Outlook Not Sending Emails",
+      "category": "Microsoft Office",
+      "problem": "Outlook can receive emails but won't send them",
+      "chatgpt_answer": "Troubleshooting steps: 1. Check SMTP server settings in account configuration. 2. Verify outgoing mail server requires authentication. 3. Check antivirus/firewall blocking port 587/465. 4. Test with webmail interface. 5. Repair Outlook installation if needed.",
+      "created_at": "2024-01-15T10:30:00Z",
+      "updated_at": "2024-01-15T10:30:00Z"
+    }
+  ]
+}
