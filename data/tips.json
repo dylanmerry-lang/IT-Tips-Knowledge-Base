@@ -26,6 +26,15 @@
       "chatgpt_answer": "Troubleshooting steps: 1. Check SMTP server settings in account configuration. 2. Verify outgoing mail server requires authentication. 3. Check antivirus/firewall blocking port 587/465. 4. Test with webmail interface. 5. Repair Outlook installation if needed.",
       "created_at": "2024-01-15T10:30:00Z",
       "updated_at": "2024-01-15T10:30:00Z"
+    },
+    {
+      "id": 1768858916470,
+      "title": "Camera has dark spots and bright spots",
+      "category": "Security",
+      "problem": "Camera has dark spots and bright spots, making certain areas hard to see",
+      "chatgpt_answer": "Enable Wide Dynamic Range",
+      "created_at": "2026-01-19T21:41:56.470Z",
+      "updated_at": "2026-01-19T21:41:56.470Z"
     }
   ]
 }

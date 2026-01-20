@@ -3,116 +3,799 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IT Tips & Tricks Tracker</title>
+    <title>Conquest Solutions Tips and Knowledge Base</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="node_modules/milligram/dist/milligram.min.css">
     <link rel="stylesheet" href="css/styles.css">
+    <style>
+        .file-preview {
+            margin-top: 10px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .file-item {
+            display: flex;
+            align-items: center;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background: #f9f9f9;
+        }
+        .file-item img {
+            max-width: 40px;
+            max-height: 40px;
+            margin-right: 8px;
+            border-radius: 4px;
+        }
+        .file-info {
+            flex: 1;
+        }
+        .file-name {
+            font-size: 14px;
+            font-weight: 500;
+        }
+        .file-size {
+            font-size: 12px;
+            color: #666;
+        }
+        .remove-file {
+            background: #ff4444;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+            font-size: 12px;
+            line-height: 1;
+        }
+        .attachments-section {
+            margin-top: 15px;
+        }
+        .attachment-item {
+            display: flex;
+            align-items: center;
+            padding: 8px;
+            border: 1px solid #eee;
+            border-radius: 4px;
+            margin-bottom: 8px;
+            background: #fafafa;
+        }
+        .attachment-thumbnail {
+            width: 40px;
+            height: 40px;
+            margin-right: 10px;
+            border-radius: 4px;
+            object-fit: cover;
+        }
+        .attachment-info {
+            flex: 1;
+        }
+        .attachment-name {
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 2px;
+        }
+        .attachment-meta {
+            font-size: 12px;
+            color: #666;
+        }
+
+        /* Settings Modal Styles */
+        .settings-modal {
+            max-width: 800px;
+            width: 90%;
+        }
+
+        .settings-nav {
+            display: flex;
+            border-bottom: 1px solid #dee2e6;
+            margin-bottom: 20px;
+        }
+
+        .settings-tab {
+            padding: 10px 20px;
+            border: none;
+            background: none;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+            transition: all 0.3s;
+        }
+
+        .settings-tab.active {
+            border-bottom-color: #007bff;
+            color: #007bff;
+            font-weight: bold;
+        }
+
+        .settings-tab:hover {
+            background-color: #f8f9fa;
+        }
+
+        .settings-tab-content {
+            display: none;
+        }
+
+        .settings-tab-content.active {
+            display: block;
+        }
+
+        .audit-controls {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+
+        .audit-controls select,
+        .audit-controls input {
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .audit-log {
+            max-height: 400px;
+            overflow-y: auto;
+            border: 1px solid #eee;
+            border-radius: 4px;
+        }
+
+        .audit-entry {
+            padding: 12px;
+            border-bottom: 1px solid #f0f0f0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .audit-entry:last-child {
+            border-bottom: none;
+        }
+
+        .audit-info {
+            flex: 1;
+        }
+
+        .audit-action {
+            font-weight: bold;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            text-transform: uppercase;
+        }
+
+        .audit-action-create {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .audit-action-update {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .audit-action-delete {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .audit-entity {
+            font-weight: 500;
+            margin: 2px 0;
+        }
+
+        .audit-details {
+            font-size: 14px;
+            color: #666;
+            margin: 2px 0;
+        }
+
+        .audit-timestamp {
+            font-size: 12px;
+            color: #999;
+        }
+
+        .audit-pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .stats-card {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .stats-number {
+            font-size: 2em;
+            font-weight: bold;
+            color: #007bff;
+            margin-bottom: 10px;
+        }
+
+        .stats-label {
+            font-size: 14px;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .recent-activity {
+            margin-top: 30px;
+        }
+
+        .activity-item {
+            padding: 10px;
+            border-left: 3px solid #007bff;
+            margin-bottom: 10px;
+            background: #f8f9fa;
+        }
+
+        .about-info {
+            margin-top: 20px;
+        }
+
+        .about-info ul {
+            margin-left: 20px;
+        }
+
+        .about-info li {
+            margin-bottom: 5px;
+        }
+
+        /* Comments Section Styles */
+        .comments-section {
+            margin-top: 20px;
+            border-top: 1px solid #eee;
+            padding-top: 20px;
+        }
+
+        .comments-section h3 {
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        .comment {
+            margin-bottom: 15px;
+            padding: 12px;
+            background: #f8f9fa;
+            border-radius: 6px;
+            border-left: 3px solid #007bff;
+        }
+
+        .comment-author {
+            font-weight: bold;
+            color: #007bff;
+            margin-bottom: 5px;
+        }
+
+        .comment-content {
+            margin-bottom: 8px;
+            line-height: 1.4;
+        }
+
+        .comment-meta {
+            font-size: 12px;
+            color: #666;
+        }
+
+        .comment-replies {
+            margin-left: 20px;
+            margin-top: 10px;
+        }
+
+        .comment-reply {
+            margin-top: 8px;
+            padding: 8px;
+            background: #fff;
+            border-radius: 4px;
+            border: 1px solid #e9ecef;
+        }
+
+        .add-comment-form {
+            margin-top: 20px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 6px;
+        }
+
+        .comment-form-group {
+            margin-bottom: 12px;
+        }
+
+        .comment-form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+
+        .comment-form-group input,
+        .comment-form-group textarea {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-family: inherit;
+        }
+
+        .comment-form-group textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .comment-actions {
+            display: flex;
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .reply-btn,
+        .edit-comment-btn,
+        .delete-comment-btn {
+            padding: 4px 8px;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+
+        .reply-btn {
+            background: #28a745;
+            color: white;
+        }
+
+        .edit-comment-btn {
+            background: #ffc107;
+            color: #212529;
+        }
+
+        .delete-comment-btn {
+            background: #dc3545;
+            color: white;
+        }
+
+        .comment-form-actions {
+            display: flex;
+            gap: 8px;
+            justify-content: flex-end;
+        }
+
+        .no-comments {
+            text-align: center;
+            color: #666;
+            font-style: italic;
+            padding: 20px;
+        }
+    </style>
 </head>
 <body>
-    <header class="header">
+    <!-- Top Navigation Bar -->
+    <nav class="top-nav">
         <div class="container">
-            <h1>IT Tips & Tricks Tracker</h1>
-            <p>Common support issues and ChatGPT solutions</p>
+            <div class="nav-content">
+                <div class="brand">
+                    <img src="img/conquest-logo.png" alt="Conquest Solutions" class="brand-logo">
+                </div>
+                <div class="search-container">
+                    <input type="text" id="searchInput" placeholder="Press / to search...">
+                    <select id="categoryFilter">
+                        <option value="">All Categories</option>
+                        <option value="FAQ">FAQ</option>
+                        <option value="SOP">SOP</option>
+                        <option value="Troubleshooting Guide">Troubleshooting Guide</option>
+                        <option value="Maps">Maps</option>
+                        <option value="Network">Network</option>
+                    </select>
+                </div>
+                <div class="nav-actions">
+                    <button id="settingsBtn" class="settings-btn" title="Settings" aria-label="Settings">⚙️</button>
+                </div>
+            </div>
         </div>
-    </header>
+    </nav>
 
     <main class="main">
         <div class="container">
-            <div class="controls">
-                <div class="search-container">
-                    <input type="text" id="searchInput" placeholder="Search tips...">
-                    <button id="searchBtn">Search</button>
-                </div>
-                <div class="filter-container">
-                    <select id="categoryFilter">
-                        <option value="">All Categories</option>
-                        <option value="Windows">Windows</option>
-                        <option value="Hardware">Hardware</option>
-                        <option value="Microsoft Office">Microsoft Office</option>
-                        <option value="Network">Network</option>
-                        <option value="Security">Security</option>
-                    </select>
-                </div>
-                <button id="addTipBtn" class="btn-primary">Add New Tip</button>
-            </div>
+            <div class="row">
+                <div class="column">
+                    <div class="content-header">
+                        <h2>Tips and Knowledge Base</h2>
+                        <button id="addTipBtn" class="add-tip-btn" aria-label="Add new tip">
+                            <span class="add-tip-icon">＋</span>
+                            <span class="add-tip-text">Add New Tip</span>
+                        </button>
+                    </div>
 
-            <div id="tipsContainer" class="tips-grid">
-                <!-- Tips will be loaded here dynamically -->
-            </div>
+                    <div id="tipsCarousel" class="carousel cs3-flex cs3-flex-column js-carousel" data-drag="on">
+                        <p class="cs3-sr-only">Tips carousel</p>
 
-            <div id="loading" class="loading">Loading tips...</div>
-            <div id="error" class="error" style="display: none;"></div>
+                        <div class="carousel__wrapper cs3-order-1 cs3-overflow-hidden" tabindex="0" aria-label="Tips carousel">
+                            <ol id="tipsContainer" class="carousel__list">
+                                <!-- Tips will be loaded here dynamically -->
+                            </ol>
+                        </div>
+
+                        <nav class="cs3-margin-bottom-xs cs3-order-3 carousel__nav">
+                            <ul class="cs3-flex cs3-gap-3xs cs3-justify-center">
+                                <li>
+                                    <button class="carousel__control carousel__control--prev js-carousel__control js-tab-focus" aria-label="Show previous tips">
+                                        <svg class="cs3-icon" viewBox="0 0 20 20">
+                                            <title>Show previous items</title>
+                                            <polyline points="13 2 5 10 13 18" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
+                                        </svg>
+                                    </button>
+                                </li>
+                                <li>
+                                    <button class="carousel__control carousel__control--next js-carousel__control js-tab-focus" aria-label="Show next tips">
+                                        <svg class="cs3-icon" viewBox="0 0 20 20">
+                                            <title>Show next items</title>
+                                            <polyline points="7 2 15 10 7 18" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
+                                        </svg>
+                                    </button>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+
+                    <div id="loading" class="loading">Loading tips...</div>
+                    <div id="error" class="error" style="display: none;"></div>
+                </div>
+            </div>
         </div>
     </main>
 
     <!-- Modal for viewing tip details -->
     <div id="tipModal" class="modal" style="display: none;">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <h2 id="modalTitle"></h2>
-            <div class="tip-meta">
-                <span class="category" id="modalCategory"></span>
-                <span class="date" id="modalDate"></span>
-            </div>
-            <div class="tip-section">
-                <h3>Problem:</h3>
-                <p id="modalProblem"></p>
-            </div>
-            <div class="tip-section">
-                <h3>ChatGPT Solution:</h3>
-                <p id="modalAnswer"></p>
+        <div class="modal-content" style="max-width: 800px; width: 90%;">
+            <div class="row">
+                <div class="column">
+                    <div class="float-right">
+                        <span class="close" style="font-size: 2rem; cursor: pointer;">&times;</span>
+                    </div>
+                    <h2 id="modalTitle"></h2>
+                    <div class="tip-meta" style="margin-bottom: 2rem;">
+                        <span class="tag" id="modalCategory"></span>
+                        <small id="modalDate" style="color: #666;"></small>
+                    </div>
+                    <div class="tip-section">
+                        <h3>Problem:</h3>
+                        <p id="modalProblem"></p>
+                    </div>
+                    <div class="tip-section">
+                        <h3>Solution:</h3>
+                        <p id="modalAnswer"></p>
+                    </div>
+
+                    <!-- Comments Section -->
+                    <div class="comments-section">
+                        <h3>Comments & Feedback</h3>
+                        <div id="commentsContainer">
+                            <div class="loading">Loading comments...</div>
+                        </div>
+
+                        <!-- Add Comment Form -->
+                        <div class="add-comment-form">
+                            <h4>Add a Comment</h4>
+                            <form id="commentForm">
+                                <fieldset>
+                                    <label for="commentContent">Comment</label>
+                                    <textarea id="commentContent" rows="3" required placeholder="Share your thoughts or feedback..."></textarea>
+                                    <input type="hidden" id="parentCommentId" value="">
+                                    <div class="row" style="margin-top: 1rem;">
+                                        <div class="column">
+                                            <button type="button" id="cancelReplyBtn" class="button button-outline" style="display: none;">Cancel Reply</button>
+                                        </div>
+                                        <div class="column text-right">
+                                            <button type="submit" class="button button-primary">Post Comment</button>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                            </form>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
     <!-- Modal for adding/editing tips -->
     <div id="editModal" class="modal" style="display: none;">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <h2 id="editModalTitle">Add New Tip</h2>
-            <form id="tipForm">
-                <div class="form-group">
-                    <label for="tipTitle">Title:</label>
-                    <input type="text" id="tipTitle" required>
+        <div class="modal-content" style="max-width: 600px; width: 90%;">
+            <div class="row">
+                <div class="column">
+                    <div class="float-right">
+                        <span class="close" style="font-size: 2rem; cursor: pointer;">&times;</span>
+                    </div>
+                    <h2 id="editModalTitle">Add New Tip</h2>
+                    <form id="tipForm" class="tip-form">
+                        <div class="form-section">
+                            <label for="tipTitle">Title</label>
+                            <input type="text" id="tipTitle" required>
+                        </div>
+
+                        <div class="form-divider"></div>
+
+                        <div class="form-section">
+                            <label for="tipCategory">Category</label>
+                            <select id="tipCategory" required>
+                                <option value="">Select Category</option>
+                                <option value="FAQ">FAQ (Frequently Asked Questions)</option>
+                                <option value="SOP">SOP (Standard Operating Procedures)</option>
+                                <option value="Troubleshooting Guide">Troubleshooting Guide</option>
+                                <option value="Maps">Maps (diagrams, floor plans, network maps)</option>
+                                <option value="Network">Network (network-related issues)</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+
+                        <div class="form-divider"></div>
+
+                        <div class="form-section">
+                            <label for="tipProblem">Problem Description</label>
+                            <textarea id="tipProblem" rows="4" required></textarea>
+                        </div>
+
+                        <div class="form-divider"></div>
+
+                        <div class="form-section">
+                            <label for="tipAnswer">Solution</label>
+                            <textarea id="tipAnswer" rows="6" required></textarea>
+                        </div>
+
+                        <div class="form-divider"></div>
+
+                        <div class="form-section">
+                            <label for="tipLocation">Location (optional)</label>
+                            <input type="text" id="tipLocation" placeholder="e.g., Office A, Server Room, etc.">
+                        </div>
+
+                        <div class="form-divider"></div>
+
+                        <div class="form-section">
+                            <label for="tipAdditionalDetails">Additional Details (optional)</label>
+                            <textarea id="tipAdditionalDetails" rows="3" placeholder="Any additional context or notes"></textarea>
+                        </div>
+
+                        <div class="form-divider"></div>
+
+                        <div class="form-section">
+                            <label for="tipAttachments">Attachments (optional)</label>
+                            <input type="file" id="tipAttachments" multiple accept="image/*,.pdf,.doc,.docx,.txt">
+                            <div id="filePreview" class="file-preview"></div>
+                            <small>Supported formats: Images, PDF, Word docs, Text files (max 10MB each, up to 5 files)</small>
+                        </div>
+
+                        <div class="row" style="margin-top: 2rem;">
+                            <div class="column">
+                                <button type="button" id="cancelBtn" class="button button-outline">Cancel</button>
+                            </div>
+                            <div class="column text-right">
+                                <button type="submit" class="button button-primary">Save Tip</button>
+                            </div>
+                        </div>
+                    </form>
                 </div>
-                <div class="form-group">
-                    <label for="tipCategory">Category:</label>
-                    <select id="tipCategory" required>
-                        <option value="">Select Category</option>
-                        <option value="Windows">Windows</option>
-                        <option value="Hardware">Hardware</option>
-                        <option value="Microsoft Office">Microsoft Office</option>
-                        <option value="Network">Network</option>
-                        <option value="Security">Security</option>
-                        <option value="Other">Other</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="tipProblem">Problem Description:</label>
-                    <textarea id="tipProblem" rows="4" required></textarea>
-                </div>
-                <div class="form-group">
-                    <label for="tipAnswer">ChatGPT Answer:</label>
-                    <textarea id="tipAnswer" rows="6" required></textarea>
-                </div>
-                <div class="form-actions">
-                    <button type="button" id="cancelBtn" class="btn-secondary">Cancel</button>
-                    <button type="submit" class="btn-primary">Save Tip</button>
-                </div>
-            </form>
+            </div>
         </div>
     </div>
 
     <!-- Modal for delete confirmation -->
     <div id="deleteModal" class="modal" style="display: none;">
-        <div class="modal-content delete-modal">
-            <h2>Confirm Delete</h2>
-            <p>Are you sure you want to delete this tip? This action cannot be undone.</p>
-            <div class="modal-actions">
-                <button id="cancelDeleteBtn" class="btn-secondary">Cancel</button>
-                <button id="confirmDeleteBtn" class="btn-delete">Delete Tip</button>
+        <div class="modal-content" style="max-width: 400px;">
+            <div class="row">
+                <div class="column">
+                    <h2>Confirm Delete</h2>
+                    <p>Are you sure you want to delete this tip? This action cannot be undone.</p>
+                    <div class="row" style="margin-top: 2rem;">
+                        <div class="column">
+                            <button id="cancelDeleteBtn" class="button button-outline">Cancel</button>
+                        </div>
+                        <div class="column text-right">
+                            <button id="confirmDeleteBtn" class="button button-primary">Delete Tip</button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
+    <!-- Settings Modal -->
+    <div id="settingsModal" class="modal" style="display: none;">
+        <div class="modal-content settings-modal">
+            <span class="close">&times;</span>
+            <h2>Settings</h2>
+
+            <div class="settings-nav">
+                <button class="settings-tab active" data-tab="audit">Audit Log</button>
+                <button class="settings-tab" data-tab="stats">Statistics</button>
+                <button class="settings-tab" data-tab="settings">Settings</button>
+                <button class="settings-tab" data-tab="about">About</button>
+            </div>
+
+            <div class="settings-content">
+                <!-- Audit Log Tab -->
+                <div id="auditTab" class="settings-tab-content active">
+                    <h3>Event Log</h3>
+                    <div class="audit-controls">
+                        <select id="auditFilter">
+                            <option value="">All Actions</option>
+                            <option value="CREATE">Created</option>
+                            <option value="UPDATE">Updated</option>
+                            <option value="DELETE">Deleted</option>
+                        </select>
+                        <input type="text" id="auditAuthorFilter" placeholder="Filter by author...">
+                        <button id="refreshAuditBtn" class="button button-outline">Refresh</button>
+                    </div>
+                    <div id="auditLogContainer" class="audit-log">
+                        <div class="loading">Loading audit logs...</div>
+                    </div>
+                    <div class="audit-pagination">
+                        <button id="auditPrevBtn" class="button button-outline" disabled>Previous</button>
+                        <span id="auditPageInfo">Page 1</span>
+                        <button id="auditNextBtn" class="button button-outline">Next</button>
+                    </div>
+                </div>
+
+                <!-- Statistics Tab -->
+                <div id="statsTab" class="settings-tab-content">
+                    <h3>Knowledge Base Statistics</h3>
+                    <div id="statsContainer">
+                        <div class="loading">Loading statistics...</div>
+                    </div>
+                </div>
+
+                <!-- Settings Tab -->
+                <div id="settingsTab" class="settings-tab-content">
+                    <h3>Application Settings</h3>
+                    <div class="settings-options">
+                        <div class="setting-item">
+                            <label class="setting-label">
+                                <input type="checkbox" id="darkModeToggle">
+                                Enable Dark Mode
+                            </label>
+                            <p class="setting-description">Toggle between light and dark themes</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- About Tab -->
+                <div id="aboutTab" class="settings-tab-content">
+                    <h3>About Conquest Solutions Knowledge Base</h3>
+                    <p>This knowledge base tracks common IT support issues and their solutions for Conquest Solutions.</p>
+                    <div class="about-info">
+                        <p><strong>Version:</strong> 1.0.0</p>
+                        <p><strong>Last Updated:</strong> January 2026</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Settings Modal -->
+    <div id="settingsModal" class="modal" style="display: none;">
+        <div class="modal-content settings-modal">
+            <span class="close">&times;</span>
+            <h2>Settings</h2>
+
+            <div class="settings-nav">
+                <button class="settings-tab active" data-tab="audit">Audit Log</button>
+                <button class="settings-tab" data-tab="stats">Statistics</button>
+                <button class="settings-tab" data-tab="settings">Settings</button>
+                <button class="settings-tab" data-tab="about">About</button>
+            </div>
+
+            <div class="settings-content">
+                <!-- Audit Log Tab -->
+                <div id="auditTab" class="settings-tab-content active">
+                    <h3>Event Log</h3>
+                    <div class="audit-controls">
+                        <select id="auditFilter">
+                            <option value="">All Actions</option>
+                            <option value="CREATE">Created</option>
+                            <option value="UPDATE">Updated</option>
+                            <option value="DELETE">Deleted</option>
+                        </select>
+                        <input type="text" id="auditAuthorFilter" placeholder="Filter by author...">
+                        <button id="refreshAuditBtn" class="btn-secondary">Refresh</button>
+                    </div>
+                    <div id="auditLogContainer" class="audit-log">
+                        <div class="loading">Loading audit logs...</div>
+                    </div>
+                    <div class="audit-pagination">
+                        <button id="auditPrevBtn" class="btn-secondary" disabled>Previous</button>
+                        <span id="auditPageInfo">Page 1</span>
+                        <button id="auditNextBtn" class="btn-secondary">Next</button>
+                    </div>
+                </div>
+
+                <!-- Statistics Tab -->
+                <div id="statsTab" class="settings-tab-content">
+                    <h3>Knowledge Base Statistics</h3>
+                    <div id="statsContainer">
+                        <div class="loading">Loading statistics...</div>
+                    </div>
+                </div>
+
+                <!-- Settings Tab -->
+                <div id="settingsTab" class="settings-tab-content">
+                    <h3>Application Settings</h3>
+                    <div class="settings-options">
+                        <div class="setting-item">
+                            <label class="setting-label">
+                                <input type="checkbox" id="darkModeToggle">
+                                <span class="checkmark"></span>
+                                Enable Dark Mode
+                            </label>
+                            <p class="setting-description">Toggle between light and dark themes</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- About Tab -->
+                <div id="aboutTab" class="settings-tab-content">
+                    <h3>About Conquest Solutions Knowledge Base</h3>
+                    <p>This knowledge base tracks common IT support issues and their solutions for Conquest Solutions.</p>
+                    <div class="about-info">
+                        <p><strong>Version:</strong> 1.0.0</p>
+                        <p><strong>Last Updated:</strong> January 2026</p>
+                        <p><strong>Features:</strong></p>
+                        <ul>
+                            <li>Comprehensive tip management</li>
+                            <li>File attachment support</li>
+                            <li>Audit logging and compliance</li>
+                            <li>Advanced search and filtering</li>
+                            <li>Hierarchical organization</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Comments Section -->
+                <div class="comments-section">
+                    <h3>Comments & Feedback</h3>
+                    <div id="commentsContainer">
+                        <div class="loading">Loading comments...</div>
+                    </div>
+
+                    <!-- Add Comment Form -->
+                    <div class="add-comment-form">
+                        <h4>Add a Comment</h4>
+                        <form id="commentForm">
+                            <div class="comment-form-group">
+                                <label for="commentAuthor">Your Name:</label>
+                                <input type="text" id="commentAuthor" required placeholder="Enter your name">
+                            </div>
+                            <div class="comment-form-group">
+                                <label for="commentContent">Comment:</label>
+                                <textarea id="commentContent" required placeholder="Share your thoughts or feedback..."></textarea>
+                            </div>
+                            <input type="hidden" id="parentCommentId" value="">
+                            <div class="comment-form-actions">
+                                <button type="button" id="cancelReplyBtn" class="btn-secondary" style="display: none;">Cancel Reply</button>
+                                <button type="submit" class="btn-primary">Post Comment</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/carousel.js"></script>
     <script src="js/app.js"></script>
 </body>
 </html>

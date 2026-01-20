@@ -1,23 +1,35 @@
-# IT Tips & Tricks Tracker
+# Conquest Solutions Tips and Knowledge Base
 
-A web application for tracking common IT support issues and their ChatGPT solutions. Perfect for IT support teams to maintain a knowledge base of frequently encountered problems and their resolutions.
+A comprehensive web application for tracking common IT support issues and maintaining a knowledge base of frequently encountered problems and their resolutions. Features advanced file attachment support, hierarchical organization, and modern UI enhancements.
 
 ## Features
 
-- 📋 **Tip Management**: Store and organize IT tips with problem descriptions and solutions
-- ✏️ **Edit & Delete**: Modify existing tips or remove them with confirmation
-- 🔍 **Search & Filter**: Quickly find tips by title, problem description, or category
-- 📱 **Responsive Design**: Works on desktop, tablet, and mobile devices
-- 🎨 **Clean UI**: Modern, intuitive interface for easy navigation
-- 💾 **Local Storage**: JSON-based storage for simplicity and portability
-- ⚡ **Fast & Lightweight**: No heavy frameworks, pure JavaScript
+- 📋 **Tip Management**: Store and organize knowledge base tips with problem descriptions and solutions
+- 🔐 **Authentication**: Cloudflare Zero Trust integration with automatic user identification
+💬 **Comments & Feedback**: Threaded discussion system using authenticated user names
+- 📎 **File Attachments**: Upload images, documents, and files with automatic thumbnail generation
+- 🔍 **Advanced Search**: Find tips by title, problem, solution, location, or category
+- 📂 **Hierarchical Categories**: Organized into FAQ, SOP, Troubleshooting Guide, Maps, and Network categories
+- 📍 **Location Tracking**: Associate tips with specific locations for better organization
+- 📊 **Audit Logging**: Complete change tracking with compliance reporting and event history
+- ⚙️ **Settings Panel**: Administrative interface with audit logs, statistics, and system information
+- 🧭 **Carousel Navigation**: Scrollable tip cards with arrow and wheel navigation
+- ✏️ **Full CRUD Operations**: Create, read, update, and delete tips with confirmation dialogs
+- 🎨 **Modern UI**: Clean, responsive design that works on all devices
+- 💾 **SQLite Database**: Robust data persistence with proper relationships
+- ⚡ **Fast & Lightweight**: Optimized performance with minimal dependencies
 
 ## Technology Stack
 
 - **Backend**: Node.js + Express.js
 - **Frontend**: HTML5, CSS3, Vanilla JavaScript
-- **Storage**: JSON file (easily upgradeable to database)
-- **Styling**: Custom CSS with responsive design
+- **UI Framework**: [Milligram](https://milligram.io/) - Minimalist CSS framework (2kb gzipped)
+- **Database**: SQLite with prepared statements
+- **Authentication**: Cloudflare Zero Trust integration
+- **File Processing**: Multer (uploads) + Sharp (image thumbnails)
+- **Audit Logging**: Comprehensive change tracking and compliance
+- **Styling**: Clean, professional design with consistent typography and dark mode
+- **Security**: Input validation, file type checking, secure file storage
 
 ## Quick Start
 
@@ -29,8 +41,8 @@ A web application for tracking common IT support issues and their ChatGPT soluti
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/dylanmerry-lang/babysfirstvibe.git
-   cd babysfirstvibe
+   git clone https://github.com/dylanmerry-lang/IT-Tips-Knowledge-Base.git
+   cd IT-Tips-Knowledge-Base
    ```
 
 2. **Install dependencies**
@@ -58,14 +70,35 @@ A web application for tracking common IT support issues and their ChatGPT soluti
 - Click "Add New Tip" button
 - Fill in the form with:
   - **Title**: Brief description of the issue
-  - **Category**: Problem category (Windows, Hardware, etc.)
+  - **Category**: Knowledge base category (FAQ, SOP, Troubleshooting Guide, Maps, Network)
   - **Problem**: Detailed problem description
-  - **ChatGPT Answer**: The solution provided by ChatGPT
+  - **Solution**: Step-by-step resolution guide
+  - **Location** (optional): Where the issue occurs (e.g., "Office A", "Server Room")
+  - **Additional Details** (optional): Extra context or notes
+  - **Attachments** (optional): Upload images, documents, or files (max 5 files, 10MB each)
 
 ### Managing Tips
-- All tips are stored locally in JSON format
+- All tips are stored in a SQLite database
+- File attachments are stored securely on the server
 - Data persists between server restarts
-- Easy to backup and migrate
+- Automatic thumbnail generation for image attachments
+- Full backup and migration capabilities
+
+### Comments & Collaboration
+- **Threaded Discussions**: Reply to comments for detailed conversations
+- **Authenticated Users**: Comments automatically use Cloudflare Zero Trust authenticated names
+- **Real-time Updates**: Comments load dynamically when viewing tips
+- **Moderation**: Users can only edit/delete their own comments
+- **Feedback Loop**: Encourage knowledge sharing and improvement
+
+### Audit Logging & Compliance
+- **Complete Event Tracking**: All tip and attachment operations are logged
+- **Change History**: View who made changes and when
+- **Compliance Reporting**: Generate audit reports for regulatory requirements
+- **Entity-Specific Logs**: Track changes to individual tips or attachments
+- **Statistics Dashboard**: View system usage and activity metrics
+- **Settings Panel**: Access audit logs through the ⚙️ settings button
+- **Dark Mode**: Toggle in Settings → Settings tab
 
 #### Editing Tips
 - Hover over any tip card to reveal Edit and Delete buttons
@@ -80,36 +113,68 @@ A web application for tracking common IT support issues and their ChatGPT soluti
 ## Project Structure
 
 ```
-babysfirstvibe/
+IT-Tips-Knowledge-Base/
 ├── server/
-│   └── app.js                 # Express server and API routes
+│   ├── app.js                 # Express server and API routes
+│   ├── database.js            # SQLite database setup and queries
+│   ├── upload.js              # File upload configuration and processing
+│   └── migrate.js             # Database migration utilities
 ├── public/
-│   ├── index.html            # Main HTML page
+│   ├── index.html             # Main HTML page
 │   ├── css/
-│   │   └── styles.css        # Application styles
+│   │   └── styles.css         # Application styles
 │   └── js/
-│       └── app.js            # Frontend JavaScript
+│       ├── app.js             # Frontend JavaScript
+│       └── carousel.js        # Carousel + swipe utilities
+├── database/
+│   └── knowledge_base.db      # SQLite database file
+├── uploads/
+│   ├── tips/                  # Uploaded files
+│   └── thumbnails/            # Generated image thumbnails
 ├── data/
-│   └── tips.json             # Tips storage
-├── package.json              # Dependencies and scripts
-├── README.md                 # This file
-└── .gitignore               # Git ignore rules
+│   ├── tips.json              # Legacy data (migrated)
+│   └── tips_backup.json       # Original data backup
+├── package.json               # Dependencies and scripts
+├── README.md                  # This file
+├── test-upload.html           # File upload testing page
+└── .gitignore                 # Git ignore rules
 ```
 
 ## API Endpoints
 
+### Tips Management
 - `GET /api/tips` - Retrieve all tips
 - `GET /api/tips/:id` - Retrieve single tip
 - `POST /api/tips` - Create new tip
 - `PUT /api/tips/:id` - Update existing tip
 - `DELETE /api/tips/:id` - Delete tip
 
+### File Attachments
+- `POST /api/tips/:id/attachments` - Upload files for a tip
+- `GET /api/tips/:id/attachments` - Get attachments for a tip
+- `DELETE /api/attachments/:id` - Delete an attachment
+
+### Comments & Feedback
+- `GET /api/tips/:id/comments` - Get all comments for a tip (threaded)
+- `POST /api/tips/:id/comments` - Create a new comment or reply
+- `PUT /api/comments/:id` - Update a comment (author only)
+- `DELETE /api/comments/:id` - Delete a comment (author only)
+
+### Audit Logging
+- `GET /api/audit-logs` - Get audit logs with filtering
+- `GET /api/audit-logs/stats` - Get audit statistics
+- `GET /api/audit-logs/:entityType/:entityId` - Get logs for specific entity
+
+### Testing
+- `POST /api/test-upload` - Test file upload functionality
+
 ## Sample Data
 
-The application comes with sample IT tips including:
-- Windows Update issues
-- Printer connectivity problems
-- Outlook email sending issues
+The application comes with sample knowledge base entries including:
+- Windows Update troubleshooting guides
+- Printer connectivity solutions
+- Email configuration procedures
+- Network setup documentation
 
 ## Development
 
@@ -122,7 +187,8 @@ The application comes with sample IT tips including:
 
 - **Categories**: Edit the category options in `public/index.html` and `public/js/app.js`
 - **Styling**: Modify `public/css/styles.css` for custom appearance
-- **Storage**: Replace JSON storage with database in `server/app.js`
+- **Database**: Modify `server/database.js` for database schema changes
+- **File Upload**: Configure upload settings in `server/upload.js`
 
 ## Contributing
 
@@ -145,10 +211,9 @@ For questions or issues:
 
 ## Future Enhancements
 
-- [ ] User authentication and authorization
-- [ ] Database integration (MongoDB, PostgreSQL)
+- [ ] Version control with rollback capabilities
 - [ ] Tip voting and rating system
 - [ ] Export functionality (PDF, CSV)
-- [ ] Advanced search with filters
-- [ ] Tip categories management
-- [ ] Backup and restore features
+- [ ] Advanced analytics and reporting
+- [ ] Bulk import/export operations
+- [ ] API rate limiting and security enhancements
