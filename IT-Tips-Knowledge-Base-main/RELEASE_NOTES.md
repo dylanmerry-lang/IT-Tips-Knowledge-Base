@@ -16,5 +16,5 @@
 - Introduced settings modal cleanup and improved dark mode readability.
 
 ### Developer Notes
-- Added `public/js/carousel.js` for swipe and carousel behavior.
+- Removed `public/js/carousel.js` in favor of native scroll-based carousel controls.
 - Updated documentation and integration plan to reflect completed phases.

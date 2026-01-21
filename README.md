@@ -124,8 +124,7 @@ IT-Tips-Knowledge-Base/
 │   ├── css/
 │   │   └── styles.css         # Application styles
 │   └── js/
-│       ├── app.js             # Frontend JavaScript
-│       └── carousel.js        # Carousel + swipe utilities
+│       └── app.js             # Frontend JavaScript
 ├── database/
 │   └── knowledge_base.db      # SQLite database file
 ├── uploads/
