@@ -421,20 +421,20 @@
                         </button>
                     </div>
 
-                    <div id="tipsCarousel" class="carousel cs3-flex cs3-flex-column js-carousel" data-drag="on">
-                        <p class="cs3-sr-only">Tips carousel</p>
+                    <div id="tipsCarousel" class="carousel">
+                        <p class="sr-only">Tips carousel</p>
 
-                        <div class="carousel__wrapper cs3-order-1 cs3-overflow-hidden" tabindex="0" aria-label="Tips carousel">
+                        <div class="carousel__wrapper" tabindex="0" aria-label="Tips carousel">
                             <ol id="tipsContainer" class="carousel__list">
                                 <!-- Tips will be loaded here dynamically -->
                             </ol>
                         </div>
 
-                        <nav class="cs3-margin-bottom-xs cs3-order-3 carousel__nav">
-                            <ul class="cs3-flex cs3-gap-3xs cs3-justify-center">
+                        <nav class="carousel__nav">
+                            <ul class="carousel__nav-list">
                                 <li>
                                     <button class="carousel__control carousel__control--prev" aria-label="Show previous tips">
-                                        <svg class="cs3-icon" viewBox="0 0 20 20">
+                                        <svg class="carousel__icon" viewBox="0 0 20 20">
                                             <title>Show previous items</title>
                                             <polyline points="13 2 5 10 13 18" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
                                         </svg>
@@ -442,7 +442,7 @@
                                 </li>
                                 <li>
                                     <button class="carousel__control carousel__control--next" aria-label="Show next tips">
-                                        <svg class="cs3-icon" viewBox="0 0 20 20">
+                                        <svg class="carousel__icon" viewBox="0 0 20 20">
                                             <title>Show next items</title>
                                             <polyline points="7 2 15 10 7 18" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
                                         </svg>
@@ -795,7 +795,6 @@
         </div>
     </div>
 
-    <script src="js/carousel.js"></script>
     <script src="js/app.js"></script>
 </body>
 </html>

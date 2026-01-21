@@ -297,10 +297,12 @@ body {
     justify-content: center;
 }
 
-.carousel__nav ul {
+.carousel__nav-list {
     list-style: none;
     margin: 0;
     padding: 0;
+    display: flex;
+    gap: 0.25rem;
 }
 
 .carousel__nav li {
@@ -326,17 +328,6 @@ body {
     scroll-snap-align: start;
 }
 
-/* Keep visible even if carousel init fails */
-.carousel--loaded .carousel__item {
-    opacity: 1;
-}
-
-.carousel__list--animating {
-    transition-property: transform;
-    transition-duration: var(--carousel-transition-duration);
-    transition-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
-}
-
 .carousel__control {
     width: 40px;
     height: 40px;
@@ -360,27 +351,7 @@ body {
     box-shadow: none;
 }
 
-.cs3-icon {
-    height: 20px;
-    width: 20px;
-    display: inline-block;
-    margin: auto;
-    color: inherit;
-    fill: currentColor;
-}
-
-/* Carousel utilities */
-.cs3-flex { display: flex; }
-.cs3-flex-column { flex-direction: column; }
-.cs3-justify-end { justify-content: flex-end; }
-.cs3-justify-center { justify-content: center; }
-.cs3-gap-3xs { gap: 0.25rem; }
-.cs3-order-1 { order: 1; }
-.cs3-order-2 { order: 2; }
-.cs3-order-3 { order: 3; }
-.cs3-overflow-hidden { overflow: hidden; }
-.cs3-margin-bottom-xs { margin-bottom: 0.5rem; }
-.cs3-sr-only {
+.sr-only {
     position: absolute;
     clip: rect(1px, 1px, 1px, 1px);
     clip-path: inset(50%);
@@ -390,6 +361,15 @@ body {
     padding: 0;
     border: 0;
     white-space: nowrap;
+}
+
+.carousel__icon {
+    height: 20px;
+    width: 20px;
+    display: inline-block;
+    margin: auto;
+    color: inherit;
+    fill: currentColor;
 }
 
 /* Tip cards */

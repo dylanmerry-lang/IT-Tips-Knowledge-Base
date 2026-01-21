@@ -183,6 +183,7 @@ class TipsTracker {
             this.filteredTips = [...this.tips];
             this.renderTips();
             this.hideLoading();
+            this.error.style.display = 'none';
         } catch (error) {
             this.showError('Failed to load tips. Please try again later.');
             console.error('Error loading tips:', error);
@@ -211,9 +212,6 @@ class TipsTracker {
     renderTips() {
         if (this.filteredTips.length === 0) {
             this.tipsContainer.innerHTML = '<li class="carousel__item"><p class="no-tips">No tips found matching your criteria.</p></li>';
-            if (window.initTipsCarousel) {
-                window.initTipsCarousel(true);
-            }
             return;
         }
 
@@ -263,20 +261,7 @@ class TipsTracker {
             });
         });
 
-        // Initialize or refresh carousel after rendering
-        if (window.initTipsCarousel) {
-            try {
-                window.initTipsCarousel(true);
-            } catch (carouselError) {
-                console.error('Carousel init failed:', carouselError);
-                const carouselEl = document.getElementById('tipsCarousel');
-                if (carouselEl) {
-                    carouselEl.classList.add('carousel--loaded');
-                }
-            }
-        }
-
-        // Ensure carousel controls are bound (scroll-based fallback)
+        // Ensure carousel controls are bound (scroll-based)
         const carouselEl = document.getElementById('tipsCarousel');
         if (carouselEl && !carouselEl.dataset.controlsBound) {
             const prevBtn = carouselEl.querySelector('.carousel__control--prev');
