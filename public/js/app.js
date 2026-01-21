@@ -295,6 +295,8 @@ class TipsTracker {
                         this.scrollCarousel(wrapper, 1);
                     }
                 });
+                prevBtn.removeAttribute('disabled');
+                nextBtn.removeAttribute('disabled');
                 carouselEl.dataset.controlsBound = 'true';
             }
         }
